@@ -13,7 +13,7 @@ Preparing selected projects for public release.
 ## About me
 
 - 💼 Open to opportunities
-- 🔭 Preparing selected frontend projects for a public portfolio
+- 🔭 Building interactive frontend projects for a public portfolio
 
 <!-- Add later:
 - 🧩 Focus:
@@ -24,48 +24,19 @@ Preparing selected projects for public release.
 
 ## Selected projects
 
-> Projects will be added after the public frontend repositories are ready.
+### Future-Facing Portfolio
 
-<!--
-### Project 01
-Short description
+A retro-futuristic single-page portfolio built around an interactive hardware console and CRT interface.
 
-**Tech:**
-**Demo:**
-**Source:**
-
-### Project 02
-Short description
-
-**Tech:**
-**Demo:**
-**Source:**
-
-### Project 03
-Short description
-
-**Tech:**
-**Demo:**
-**Source:**
--->
+**Tech:** Next.js 16, React 19, TypeScript, Tailwind CSS 4  
+**Status:** Preparing for public release
 
 ## Tech stack
 
-<!-- Add verified technologies later:
-- Frontend:
-- Backend:
-- Database:
-- Tools:
--->
+- **Frontend:** Next.js 16, React 19, TypeScript, Tailwind CSS 4
+- **UI:** CSS animations, transforms, responsive layout, accessible keyboard interaction
+- **Tools:** Git, GitHub, ESLint
 
 ## GitHub activity
 
 My contribution graph below shows my ongoing development activity.
-
-## Contact
-
-<!-- Add later:
-- Email:
-- LinkedIn:
-- Portfolio:
--->
