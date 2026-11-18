@@ -81,11 +81,15 @@ const holder = document.createElement("div");
 holder.innerHTML = ${JSON.stringify(html)};
 // Two columns like the metrics showcase: Skills and the contributions calendar on the
 // right, every other section (profile, activity, repositories, languages) on the left.
-const items = [...wrapper.children].filter((e) => e.tagName.toLowerCase() !== "footer");
+const items = Array.from(wrapper.children).filter((e) => e.tagName.toLowerCase() !== "footer");
 const left = document.createElement("div");
 const right = document.createElement("div");
 left.className = right.className = "metrics-col";
-items.forEach((e) => (/calendar/i.test(e.querySelector("h2")?.textContent ?? "") ? right : left).appendChild(e));
+for (const e of items) {
+const h2 = e.querySelector("h2");
+if (h2 && /calendar/i.test(h2.textContent)) right.appendChild(e);
+else left.appendChild(e);
+}
 right.prepend(holder.firstElementChild);
 wrapper.prepend(left, right);
 
@@ -95,13 +99,21 @@ const svg = document.querySelector("svg");
 svg.setAttribute("width", "960");
 style.textContent += ${JSON.stringify(LAYOUT_CSS)};
 await new Promise((solve) => setTimeout(solve, 500));
-// Leave ~8% spare height at the bottom so other fonts on the viewer's side cannot clip it.
+// Leave spare height (about 8 percent) at the bottom so other fonts on the viewer's side cannot clip it.
 const measured = document.querySelector("svg #metrics-end").getBoundingClientRect().y;
-wrapper.style.paddingBottom = \`\${Math.ceil(measured * 0.08) + 8}px\`;
+wrapper.style.paddingBottom = \`\${Math.ceil(measured / 12.5) + 8}px\`;
 const height = Math.ceil(document.querySelector("svg #metrics-end").getBoundingClientRect().y);
 svg.setAttribute("viewBox", \`0 0 960 \${height}\`);
 svg.setAttribute("preserveAspectRatio", "xMinYMin meet");
 `;
+
+// The metrics action runs its inputs through an unquoted `echo $INPUTS`, so a word made of shell
+// glob characters (like " * ") expands to file names, and runs of spaces collapse into one.
+// "%" is avoided too, since metrics URI-decodes its inputs.
+const unsafe = js.split(/\s+/).filter((word) => /[*?[]/.test(word));
+if (unsafe.length || js.includes("%") || /[ \t]{2}|\t/.test(js)) {
+  throw new Error(`skills.js has shell-unsafe content: ${JSON.stringify(unsafe)}, "%", tabs or double spaces`);
+}
 
 mkdirSync(".github/metrics", { recursive: true });
 writeFileSync(".github/metrics/skills.js", js);
