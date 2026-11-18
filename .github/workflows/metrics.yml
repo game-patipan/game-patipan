@@ -33,7 +33,7 @@ jobs:
         with:
           # Personal access token (classic) stored as the METRICS_TOKEN repository secret
           token: ${{ secrets.METRICS_TOKEN }}
-          user: gamegreanai
+          # No `user:` input: metrics uses the token owner, so this keeps working after a username change
           filename: metrics.svg
           template: classic
           base: header, activity, community, repositories
