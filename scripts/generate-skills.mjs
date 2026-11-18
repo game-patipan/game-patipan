@@ -63,7 +63,9 @@ const css = [
 
 // Explicit columns (CSS multi-column overflowed when a block could not break).
 const LAYOUT_CSS = [
-  ".items-wrapper{display:flex;align-items:flex-start;gap:10px;padding-bottom:8px}",
+  // Fixed line-height: "normal" depends on the font, which differs between the
+  // renderer and the viewer's browser and would change the content height.
+  ".items-wrapper{display:flex;align-items:flex-start;gap:10px;padding-bottom:8px;line-height:1.3}",
   ".items-wrapper>.metrics-col{flex:1 1 0;min-width:0}",
 ].join("");
 
@@ -93,6 +95,9 @@ const svg = document.querySelector("svg");
 svg.setAttribute("width", "960");
 style.textContent += ${JSON.stringify(LAYOUT_CSS)};
 await new Promise((solve) => setTimeout(solve, 500));
+// Leave ~8% spare height at the bottom so other fonts on the viewer's side cannot clip it.
+const measured = document.querySelector("svg #metrics-end").getBoundingClientRect().y;
+wrapper.style.paddingBottom = \`\${Math.ceil(measured * 0.08) + 8}px\`;
 const height = Math.ceil(document.querySelector("svg #metrics-end").getBoundingClientRect().y);
 svg.setAttribute("viewBox", \`0 0 960 \${height}\`);
 svg.setAttribute("preserveAspectRatio", "xMinYMin meet");
