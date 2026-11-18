@@ -61,9 +61,10 @@ const css = [
   "@media (prefers-color-scheme:dark){#skills .skill-dark path{fill:#c9d1d9}}",
 ].join("");
 
+// Explicit columns (CSS multi-column overflowed when a block could not break).
 const LAYOUT_CSS = [
-  ".items-wrapper{column-count:2;column-gap:10px;padding-bottom:12px}",
-  ".items-wrapper>*{break-inside:avoid-column;page-break-inside:avoid}",
+  ".items-wrapper{display:flex;align-items:flex-start;gap:10px;padding-bottom:8px}",
+  ".items-wrapper>.metrics-col{flex:1 1 0;min-width:0}",
 ].join("");
 
 const html = `<section id="skills"><h2 class="field">${TOOLS_ICON}Skills</h2><div class="skill-grid">${groups}</div></section>`;
@@ -76,14 +77,18 @@ style.textContent = ${JSON.stringify(css)};
 document.querySelector("svg").prepend(style);
 const holder = document.createElement("div");
 holder.innerHTML = ${JSON.stringify(html)};
-// Place Skills just before the contributions calendar (after coding habits, as in the
-// metrics showcase); append it at the end if that section is missing.
-const calendar = [...wrapper.querySelectorAll(":scope > section")]
-  .find((s) => /calendar/i.test(s.querySelector("h2")?.textContent ?? ""));
-wrapper.insertBefore(holder.firstElementChild, calendar ?? wrapper.querySelector(":scope > footer"));
+// Two columns like the metrics showcase: Skills and the contributions calendar on the
+// right, every other section (profile, activity, repositories, languages) on the left.
+const items = [...wrapper.children].filter((e) => e.tagName.toLowerCase() !== "footer");
+const left = document.createElement("div");
+const right = document.createElement("div");
+left.className = right.className = "metrics-col";
+items.forEach((e) => (/calendar/i.test(e.querySelector("h2")?.textContent ?? "") ? right : left).appendChild(e));
+right.prepend(holder.firstElementChild);
+wrapper.prepend(left, right);
 
-// Two-column 960px layout like the metrics showcase. The viewBox lets GitHub scale the
-// image down to the README width instead of clipping the right column.
+// 960px wide; the viewBox lets GitHub scale the image down to the README width
+// instead of clipping the right column.
 const svg = document.querySelector("svg");
 svg.setAttribute("width", "960");
 style.textContent += ${JSON.stringify(LAYOUT_CSS)};
