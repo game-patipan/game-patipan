@@ -61,6 +61,11 @@ const css = [
   "@media (prefers-color-scheme:dark){#skills .skill-dark path{fill:#c9d1d9}}",
 ].join("");
 
+const LAYOUT_CSS = [
+  ".items-wrapper{column-count:2;column-gap:10px;padding-bottom:12px}",
+  ".items-wrapper>*{break-inside:avoid-column;page-break-inside:avoid}",
+].join("");
+
 const html = `<section id="skills"><h2 class="field">${TOOLS_ICON}Skills</h2><div class="skill-grid">${groups}</div></section>`;
 
 // Runs inside metrics' puppeteer page, after rendering and before resizing.
@@ -71,8 +76,21 @@ style.textContent = ${JSON.stringify(css)};
 document.querySelector("svg").prepend(style);
 const holder = document.createElement("div");
 holder.innerHTML = ${JSON.stringify(html)};
-const header = wrapper.querySelector(":scope > section");
-wrapper.insertBefore(holder.firstElementChild, header ? header.nextElementSibling : wrapper.firstChild);
+// Place Skills just before the contributions calendar (after coding habits, as in the
+// metrics showcase); append it at the end if that section is missing.
+const calendar = [...wrapper.querySelectorAll(":scope > section")]
+  .find((s) => /calendar/i.test(s.querySelector("h2")?.textContent ?? ""));
+wrapper.insertBefore(holder.firstElementChild, calendar ?? wrapper.querySelector(":scope > footer"));
+
+// Two-column 960px layout like the metrics showcase. The viewBox lets GitHub scale the
+// image down to the README width instead of clipping the right column.
+const svg = document.querySelector("svg");
+svg.setAttribute("width", "960");
+style.textContent += ${JSON.stringify(LAYOUT_CSS)};
+await new Promise((solve) => setTimeout(solve, 500));
+const height = Math.ceil(document.querySelector("svg #metrics-end").getBoundingClientRect().y);
+svg.setAttribute("viewBox", \`0 0 960 \${height}\`);
+svg.setAttribute("preserveAspectRatio", "xMinYMin meet");
 `;
 
 mkdirSync(".github/metrics", { recursive: true });
