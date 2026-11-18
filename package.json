@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "skills": "node scripts/generate-skills-svg.mjs"
+    "skills": "node scripts/generate-skills.mjs"
   },
   "devDependencies": {
     "simple-icons": "^15.0.0"
