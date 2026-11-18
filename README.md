@@ -31,12 +31,6 @@ A retro-futuristic single-page portfolio built around an interactive hardware co
 **Tech:** Next.js 16, React 19, TypeScript, Tailwind CSS 4  
 **Status:** Preparing for public release
 
-## Tech stack
+## Skills & GitHub activity
 
-- **Frontend:** Next.js 16, React 19, TypeScript, Tailwind CSS 4
-- **UI:** CSS animations, transforms, responsive layout, accessible keyboard interaction
-- **Tools:** Git, GitHub, ESLint
-
-## GitHub activity
-
-My contribution graph below shows my ongoing development activity.
+<img src="./metrics.svg" alt="GitHub metrics with skills: Python, JavaScript, TypeScript, Next.js, React, Tailwind CSS, CSS, Bootstrap, Django, REST API, Celery, LINE Messaging API, Google Sheets API, Google Drive API, MySQL, PostgreSQL, SQLite, NoSQL, Redis, Linux VPS, Nginx, Fail2ban, Docker, Kubernetes, Cloudflare, Git" />
