@@ -112,6 +112,12 @@ habits = make(\`<section id="habits">${HABITS_TITLE.replace(/`/g, "")} <small cl
 }
 const skills = make(${JSON.stringify(SKILLS_HTML)});
 
+// Hide repository stats that are always empty for this profile.
+for (const field of Array.from(document.querySelectorAll(".items-wrapper section .field"))) {
+if (field.querySelector("h2") || field.tagName.toLowerCase() === "h2") continue;
+if (/license|Release|Package|Sponsor|Stargazer|Forker/.test(field.textContent)) field.remove();
+}
+
 // Left: profile, repositories, coding habits. Right: calendar, languages, skills.
 const left = document.createElement("div");
 const right = document.createElement("div");
