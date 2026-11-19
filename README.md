@@ -33,4 +33,6 @@ A retro-futuristic single-page portfolio built around an interactive hardware co
 
 ## Skills & GitHub activity
 
-<img src="./metrics.svg" alt="GitHub metrics with skills: Python, JavaScript, TypeScript, Next.js, React, Tailwind CSS, CSS, Bootstrap, Django, REST API, Celery, LINE Messaging API, Google Sheets API, Google Drive API, MySQL, PostgreSQL, SQLite, NoSQL, Redis, Linux VPS, Nginx, Fail2ban, Docker, Kubernetes, Cloudflare, Git" />
+<p align="center">
+  <img src="./metrics.svg" width="100%" alt="GitHub metrics with skills: Python, JavaScript, TypeScript, Next.js, React, Tailwind CSS, CSS, Bootstrap, Django, REST API, Celery, LINE Messaging API, Google Sheets API, Google Drive API, MySQL, PostgreSQL, SQLite, NoSQL, Redis, Linux VPS, Nginx, Fail2ban, Docker, Kubernetes, Cloudflare, Git" />
+</p>
