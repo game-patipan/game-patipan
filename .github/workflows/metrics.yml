@@ -25,7 +25,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.METRICS_TOKEN }}
           TZ_OFFSET_HOURS: "7"
-        run: node .github/metrics/habits.mjs > "$RUNNER_TEMP/habits.js" || : > "$RUNNER_TEMP/habits.js"
+        # If counting fails, the card still renders, just without the habits charts.
+        run: |
+          if ! node .github/metrics/habits.mjs > "$RUNNER_TEMP/habits.js"; then
+            echo "" > "$RUNNER_TEMP/habits.js"
+          fi
 
       # Habits charts, skills and the two-column layout injected into the render (see scripts/generate-skills.mjs)
       - name: Load extras script
